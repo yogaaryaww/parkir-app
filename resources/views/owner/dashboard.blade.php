@@ -180,11 +180,16 @@
             </table>
         </div>
     </div>
-    @if($transaksiList->hasPages())
-        <div class="card-footer bg-white py-2">
-            {{ $transaksiList->links() }}
+    <div class="card-footer bg-white py-3 border-top">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div class="text-muted small">
+                Menampilkan <span class="fw-bold text-dark">{{ $transaksiList->firstItem() ?? 0 }}</span> s/d <span class="fw-bold text-dark">{{ $transaksiList->lastItem() ?? 0 }}</span> dari total <span class="fw-bold text-dark">{{ $transaksiList->total() }}</span> transaksi
+            </div>
+            <div>
+                {{ $transaksiList->links('pagination::bootstrap-5') }}
+            </div>
         </div>
-    @endif
+    </div>
 </div>
 
 @endsection

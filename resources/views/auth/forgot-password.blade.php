@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Aplikasi Parkir UKK</title>
+    <title>Lupa Password - Aplikasi Parkir</title>
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- FontAwesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
@@ -29,14 +27,14 @@
             border-radius: 1.25rem;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             overflow: hidden;
         }
 
         .login-header {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             color: #ffffff;
-            padding: 2.5rem 2rem 2rem;
+            padding: 2rem 2rem 1.5rem;
             text-align: center;
         }
 
@@ -68,21 +66,14 @@
 
 <div class="login-card">
     <div class="login-header">
-        <div class="mb-3">
-            <i class="fa-solid fa-square-parking fa-4x text-white"></i>
+        <div class="mb-2">
+            <i class="fa-solid fa-key-skeleton fa-3x text-white"></i>
         </div>
-        <h4 class="fw-bold mb-1">PARKIR SYSTEM</h4>
-        <p class="text-white-50 small m-0">Sistem Manajemen & Transaksi Parkir</p>
+        <h5 class="fw-bold mb-1">RESET PASSWORD</h5>
+        <p class="text-white-50 small m-0">Masukkan email & buat password baru Anda</p>
     </div>
 
     <div class="login-body">
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show small" role="alert">
-                <i class="fa-solid fa-circle-check me-1"></i> {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
         @if(session('error'))
             <div class="alert alert-danger alert-dismissible fade show small" role="alert">
                 <i class="fa-solid fa-circle-exclamation me-1"></i> {{ session('error') }}
@@ -90,13 +81,14 @@
             </div>
         @endif
 
-        <form action="{{ route('login.post') }}" method="POST">
+        <form action="{{ route('password.reset.post') }}" method="POST">
             @csrf
+
             <div class="mb-3">
-                <label for="email" class="form-label fw-semibold small text-secondary">Alamat Email</label>
+                <label for="email" class="form-label fw-semibold small text-secondary">Alamat Email Terdaftar</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-envelope text-muted"></i></span>
-                    <input type="email" name="email" id="email" class="form-control border-start-0 @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="admin@parkir.com" required autofocus>
+                    <input type="email" name="email" id="email" class="form-control border-start-0 @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Contoh: admin@parkir.com" required autofocus>
                 </div>
                 @error('email')
                     <div class="text-danger small mt-1">{{ $message }}</div>
@@ -104,13 +96,10 @@
             </div>
 
             <div class="mb-3">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <label for="password" class="form-label fw-semibold small text-secondary m-0">Password</label>
-                    <a href="{{ route('password.forgot') }}" class="small text-decoration-none text-primary fw-semibold">Lupa Password?</a>
-                </div>
+                <label for="password" class="form-label fw-semibold small text-secondary">Password Baru</label>
                 <div class="input-group">
-                    <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-key text-muted"></i></span>
-                    <input type="password" name="password" id="password" class="form-control border-start-0 border-end-0 @error('password') is-invalid @enderror" placeholder="Masukkan password" required>
+                    <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-lock text-muted"></i></span>
+                    <input type="password" name="password" id="password" class="form-control border-start-0 border-end-0 @error('password') is-invalid @enderror" placeholder="Minimal 6 karakter" required>
                     <button class="btn btn-light border border-start-0" type="button" id="togglePassword">
                         <i class="fa-solid fa-eye text-muted" id="eyeIcon"></i>
                     </button>
@@ -120,27 +109,48 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary-custom text-white w-100 mt-2 mb-2">
-                <i class="fa-solid fa-right-to-bracket me-2"></i> Masuk Ke Sistem
+            <div class="mb-4">
+                <label for="password_confirmation" class="form-label fw-semibold small text-secondary">Konfirmasi Password Baru</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-lock text-muted"></i></span>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control border-start-0 border-end-0" placeholder="Ketik ulang password baru" required>
+                    <button class="btn btn-light border border-start-0" type="button" id="toggleConfirmPassword">
+                        <i class="fa-solid fa-eye text-muted" id="eyeConfirmIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary-custom text-white w-100 mb-3">
+                <i class="fa-solid fa-check-circle me-2"></i> Perbarui Password
             </button>
+
+            <div class="text-center">
+                <a href="{{ route('login') }}" class="small text-decoration-none text-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke Halaman Login
+                </a>
+            </div>
         </form>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-    const eyeIcon = document.getElementById('eyeIcon');
-
-    if (togglePassword && passwordInput && eyeIcon) {
-        togglePassword.addEventListener('click', function () {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            eyeIcon.classList.toggle('fa-eye');
-            eyeIcon.classList.toggle('fa-eye-slash');
-        });
+    function setupToggle(buttonId, inputId, iconId) {
+        const btn = document.getElementById(buttonId);
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (btn && input && icon) {
+            btn.addEventListener('click', function () {
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+        }
     }
+
+    setupToggle('togglePassword', 'password', 'eyeIcon');
+    setupToggle('toggleConfirmPassword', 'password_confirmation', 'eyeConfirmIcon');
 </script>
 </body>
 </html>

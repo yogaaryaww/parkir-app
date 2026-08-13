@@ -24,11 +24,13 @@ class KategoriKendaraanController extends Controller
     {
         $request->validate([
             'nama_kategori' => 'required|string|max:50|unique:kategori_kendaraan,nama_kategori',
+            'icon_class' => 'nullable|string|max:100',
             'keterangan' => 'nullable|string',
         ]);
 
         $kat = KategoriKendaraan::create([
             'nama_kategori' => $request->nama_kategori,
+            'icon_class' => $request->icon_class ?: 'fa-solid fa-car',
             'keterangan' => $request->keterangan,
         ]);
 
@@ -46,11 +48,13 @@ class KategoriKendaraanController extends Controller
     {
         $request->validate([
             'nama_kategori' => 'required|string|max:50|unique:kategori_kendaraan,nama_kategori,' . $kategori->id,
+            'icon_class' => 'nullable|string|max:100',
             'keterangan' => 'nullable|string',
         ]);
 
         $kategori->update([
             'nama_kategori' => $request->nama_kategori,
+            'icon_class' => $request->icon_class ?: 'fa-solid fa-car',
             'keterangan' => $request->keterangan,
         ]);
 

@@ -38,8 +38,13 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label fw-semibold">Password</label>
-                        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required placeholder="Minimal 6 karakter">
-                        @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <div class="input-group">
+                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required placeholder="Minimal 6 karakter">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                            </button>
+                        </div>
+                        @error('password') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
 
                     <div class="row">
@@ -73,4 +78,21 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    if (togglePassword && passwordInput && eyeIcon) {
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+    }
+</script>
+@endpush
 @endsection

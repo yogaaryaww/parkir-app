@@ -38,9 +38,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label fw-semibold">Password <span class="text-muted small fw-normal">(Kosongkan jika tidak ingin mengubah password)</span></label>
-                        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Isi hanya jika ingin mengganti password">
-                        @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <label for="password" class="form-label fw-semibold">Password Baru <span class="text-muted small fw-normal">(Kosongkan jika tidak ingin mengubah password)</span></label>
+                        <div class="input-group">
+                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Isi hanya jika ingin mengganti password">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                            </button>
+                        </div>
+                        @error('password') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
 
                     <div class="row">
@@ -72,4 +77,21 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    if (togglePassword && passwordInput && eyeIcon) {
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+    }
+</script>
+@endpush
 @endsection

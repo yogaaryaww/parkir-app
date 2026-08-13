@@ -13,6 +13,7 @@ class KategoriKendaraan extends Model
 
     protected $fillable = [
         'nama_kategori',
+        'icon_class',
         'keterangan',
     ];
 

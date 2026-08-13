@@ -20,7 +20,7 @@
                         <th>Kapasitas</th>
                         <th>Terisi</th>
                         <th>Sisa Slot</th>
-                        <th>Status Status Status Status Status Status Status Status Status Status Status Status Status</th>
+                        <th>Status</th>
                         <th width="150" class="text-center">Aksi</th>
                     </tr>
                 </thead>

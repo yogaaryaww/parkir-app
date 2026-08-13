@@ -28,11 +28,7 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td class="fw-bold text-primary">
-                                <i class="fa-solid 
-                                    @if(strtolower($k->nama_kategori) == 'motor') fa-motorcycle 
-                                    @elseif(strtolower($k->nama_kategori) == 'mobil') fa-car 
-                                    @else fa-bus 
-                                    @endif me-2"></i>
+                                <i class="{{ $k->icon_class ?: 'fa-solid fa-car' }} me-2"></i>
                                 {{ $k->nama_kategori }}
                             </td>
                             <td class="text-muted">{{ $k->keterangan ?? '-' }}</td>

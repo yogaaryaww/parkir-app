@@ -12,6 +12,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         body {
@@ -293,7 +295,7 @@
 
             {{-- Footer --}}
             <footer class="mt-auto py-3 bg-white border-top text-center text-muted small">
-                &copy; {{ date('Y') }} Aplikasi Parkir &mdash; Sistem Manajemen Parkir UKK RPL
+                &copy; {{ date('Y') }} Aplikasi Parkir &mdash; Sistem Manajemen Parkir 
             </footer>
         </div>
     </div>

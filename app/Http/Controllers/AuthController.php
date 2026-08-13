@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\LogAktivitas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -19,15 +21,16 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'username' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required|string',
         ], [
-            'username.required' => 'Username wajib diisi.',
+            'email.required' => 'Alamat email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
             'password.required' => 'Password wajib diisi.',
         ]);
 
         $credentials = [
-            'username' => $request->username,
+            'email' => $request->email,
             'password' => $request->password,
         ];
 
@@ -38,7 +41,7 @@ class AuthController extends Controller
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
-                return back()->withErrors(['username' => 'Akun Anda telah dinonaktifkan.'])->withInput();
+                return back()->withErrors(['email' => 'Akun Anda telah dinonaktifkan.'])->withInput();
             }
 
             $request->session()->regenerate();
@@ -48,7 +51,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'username' => 'Username atau password yang Anda masukkan salah.',
+            'email' => 'Email atau password yang Anda masukkan salah.',
         ])->withInput();
     }
 
@@ -64,6 +67,42 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login')->with('success', 'Anda telah berhasil keluar dari sistem.');
+    }
+
+    public function showForgotPasswordForm()
+    {
+        if (Auth::check()) {
+            return $this->redirectBasedOnRole(Auth::user()->role);
+        }
+        return view('auth.forgot-password');
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string|min:6|confirmed',
+        ], [
+            'email.required' => 'Alamat email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.exists' => 'Alamat email tidak terdaftar dalam sistem.',
+            'password.required' => 'Password baru wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Konfirmasi password baru tidak cocok.',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user->status !== 'aktif') {
+            return back()->withErrors(['email' => 'Akun ini sedang dinonaktifkan. Hubungi admin.'])->withInput();
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        LogAktivitas::catat('Reset Password', 'User ' . $user->nama . ' (' . $user->role . ') memperbarui password via Lupa Password.');
+
+        return redirect()->route('login')->with('success', 'Password Anda berhasil diperbarui! Silakan login dengan password baru.');
     }
 
     private function redirectBasedOnRole($role)

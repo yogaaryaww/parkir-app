@@ -32,6 +32,10 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Lupa Password / Reset Password
+Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.forgot');
+Route::post('/forgot-password', [AuthController::class, 'resetPassword'])->name('password.reset.post');
+
 // =============================================
 // Grup ADMIN
 // =============================================
