@@ -14,6 +14,7 @@ class TransaksiParkir extends Model
     protected $fillable = [
         'kode_tiket',
         'plat_nomor',
+        'kendaraan_id',
         'kategori_kendaraan_id',
         'area_parkir_id',
         'waktu_masuk',
@@ -31,6 +32,11 @@ class TransaksiParkir extends Model
         'waktu_masuk' => 'datetime',
         'waktu_keluar' => 'datetime',
     ];
+
+    public function kendaraan()
+    {
+        return $this->belongsTo(Kendaraan::class, 'kendaraan_id');
+    }
 
     public function kategoriKendaraan()
     {

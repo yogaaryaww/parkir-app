@@ -234,7 +234,7 @@
                                 transition:all 0.2s;
                             " onmouseover="this.style.backgroundColor='rgba(255,255,255,0.06)'"
                                onmouseout="this.style.backgroundColor='transparent'">
-                                <i class="fa-solid fa-power-off" style="width:18px;text-align:center;"></i>
+                                <i class="fa-solid fa-right-from-bracket" style="width:18px;text-align:center;"></i>
                                 Logout
                             </button>
                         </form>

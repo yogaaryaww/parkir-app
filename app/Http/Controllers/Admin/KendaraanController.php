@@ -101,6 +101,12 @@ class KendaraanController extends Controller
     public function destroy(Kendaraan $kendaraan)
     {
         $plat = $kendaraan->plat_nomor;
+
+        if ($kendaraan->transaksiParkir()->exists()) {
+            return redirect()->route('admin.kendaraan.index')
+                ->with('error', "Kendaraan {$plat} tidak dapat dihapus karena sudah memiliki riwayat transaksi parkir.");
+        }
+
         $kendaraan->delete();
 
         LogAktivitas::catat('Hapus Kendaraan', "Menghapus data kendaraan: {$plat}");

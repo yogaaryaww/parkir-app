@@ -203,11 +203,11 @@
             </div>
             <div class="struk-row">
                 <span class="label">Plat Nomor</span>
-                <span class="value" style="font-size: 1rem;">{{ $transaksi->plat_nomor }}</span>
+                <span class="value" style="font-size: 1rem;">{{ $transaksi->kendaraan->plat_nomor ?? $transaksi->plat_nomor }}</span>
             </div>
             <div class="struk-row">
                 <span class="label">Jenis Kendaraan</span>
-                <span class="value">{{ $transaksi->kategoriKendaraan->nama_kategori ?? '-' }}</span>
+                <span class="value">{{ $transaksi->kendaraan->kategoriKendaraan->nama_kategori ?? $transaksi->kategoriKendaraan->nama_kategori ?? '-' }}</span>
             </div>
             <div class="struk-row">
                 <span class="label">Area Parkir</span>

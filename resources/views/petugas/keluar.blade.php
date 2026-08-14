@@ -37,11 +37,21 @@
                 <table class="table table-borderless table-sm mb-3" style="font-size: 0.95rem;">
                     <tr>
                         <td class="text-muted">Plat Nomor:</td>
-                        <td class="fw-bold fs-5 text-dark">{{ $transaksi->plat_nomor }}</td>
+                        <td class="fw-bold fs-5 text-dark">
+                            {{ $transaksi->kendaraan->plat_nomor ?? $transaksi->plat_nomor }}
+                        </td>
                     </tr>
+                    @if($transaksi->kendaraan && $transaksi->kendaraan->nama_pemilik)
+                    <tr>
+                        <td class="text-muted">Pemilik:</td>
+                        <td class="fw-semibold text-dark">{{ $transaksi->kendaraan->nama_pemilik }}</td>
+                    </tr>
+                    @endif
                     <tr>
                         <td class="text-muted">Jenis Kendaraan:</td>
-                        <td class="fw-semibold">{{ $transaksi->kategoriKendaraan ? $transaksi->kategoriKendaraan->nama_kategori : '-' }}</td>
+                        <td class="fw-semibold">
+                            {{ $transaksi->kendaraan->kategoriKendaraan->nama_kategori ?? $transaksi->kategoriKendaraan->nama_kategori ?? '-' }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-muted">Waktu Masuk:</td>
@@ -118,8 +128,8 @@
                             @forelse($kendaraanAktif as $item)
                                 <tr class="{{ isset($transaksi) && $transaksi->id === $item->id ? 'table-primary' : '' }}">
                                     <td><code class="fw-bold text-primary">{{ $item->kode_tiket }}</code></td>
-                                    <td class="fw-bold text-dark">{{ $item->plat_nomor }}</td>
-                                    <td>{{ $item->kategoriKendaraan ? $item->kategoriKendaraan->nama_kategori : '-' }}</td>
+                                    <td class="fw-bold text-dark">{{ $item->kendaraan->plat_nomor ?? $item->plat_nomor }}</td>
+                                    <td>{{ $item->kendaraan->kategoriKendaraan->nama_kategori ?? $item->kategoriKendaraan->nama_kategori ?? '-' }}</td>
                                     <td>{{ $item->areaParkir ? $item->areaParkir->nama_area : '-' }}</td>
                                     <td class="text-muted">{{ $item->waktu_masuk->format('H:i:s') }}</td>
                                     <td class="text-center">

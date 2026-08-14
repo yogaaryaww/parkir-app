@@ -135,8 +135,8 @@
                     @forelse($transaksiList as $t)
                         <tr>
                             <td><code class="fw-bold text-primary">{{ $t->kode_tiket }}</code></td>
-                            <td class="fw-bold">{{ $t->plat_nomor }}</td>
-                            <td>{{ $t->kategoriKendaraan->nama_kategori ?? '-' }}</td>
+                            <td class="fw-bold">{{ $t->kendaraan->plat_nomor ?? $t->plat_nomor }}</td>
+                            <td>{{ $t->kendaraan->kategoriKendaraan->nama_kategori ?? $t->kategoriKendaraan->nama_kategori ?? '-' }}</td>
                             <td>{{ $t->areaParkir->nama_area ?? '-' }}</td>
                             <td>{{ $t->waktu_masuk->format('d/m/Y H:i') }}</td>
                             <td>

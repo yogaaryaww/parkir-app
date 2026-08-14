@@ -23,7 +23,7 @@ class DashboardController extends Controller
             ->where('status', 'selesai')
             ->sum('total_bayar');
 
-        $transaksiTerakhir = TransaksiParkir::with(['kategoriKendaraan', 'areaParkir'])
+        $transaksiTerakhir = TransaksiParkir::with(['kendaraan.kategoriKendaraan', 'kategoriKendaraan', 'areaParkir'])
             ->latest()
             ->take(5)
             ->get();

@@ -16,7 +16,7 @@ class DashboardController extends Controller
         $tglSelesai = $request->get('tgl_selesai', Carbon::today()->format('Y-m-d'));
         $kategoriId = $request->get('kategori_kendaraan_id');
 
-        $query = TransaksiParkir::with(['kategoriKendaraan', 'areaParkir', 'petugasMasuk', 'petugasKeluar'])
+        $query = TransaksiParkir::with(['kendaraan.kategoriKendaraan', 'kategoriKendaraan', 'areaParkir', 'petugasMasuk', 'petugasKeluar'])
             ->whereDate('waktu_masuk', '>=', $tglMulai)
             ->whereDate('waktu_masuk', '<=', $tglSelesai);
 
@@ -53,7 +53,7 @@ class DashboardController extends Controller
         $tglSelesai = $request->get('tgl_selesai', Carbon::today()->format('Y-m-d'));
         $kategoriId = $request->get('kategori_kendaraan_id');
 
-        $query = TransaksiParkir::with(['kategoriKendaraan', 'areaParkir', 'petugasMasuk', 'petugasKeluar'])
+        $query = TransaksiParkir::with(['kendaraan.kategoriKendaraan', 'kategoriKendaraan', 'areaParkir', 'petugasMasuk', 'petugasKeluar'])
             ->whereDate('waktu_masuk', '>=', $tglMulai)
             ->whereDate('waktu_masuk', '<=', $tglSelesai);
 

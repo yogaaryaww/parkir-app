@@ -229,8 +229,8 @@
                     <tr>
                         <td>{{ $i + 1 }}</td>
                         <td><strong>{{ $t->kode_tiket }}</strong></td>
-                        <td><strong>{{ $t->plat_nomor }}</strong></td>
-                        <td>{{ $t->kategoriKendaraan->nama_kategori ?? '-' }}</td>
+                        <td><strong>{{ $t->kendaraan->plat_nomor ?? $t->plat_nomor }}</strong></td>
+                        <td>{{ $t->kendaraan->kategoriKendaraan->nama_kategori ?? $t->kategoriKendaraan->nama_kategori ?? '-' }}</td>
                         <td>{{ $t->areaParkir->nama_area ?? '-' }}</td>
                         <td>{{ $t->waktu_masuk->format('d/m/Y H:i') }}</td>
                         <td>{{ $t->waktu_keluar ? $t->waktu_keluar->format('d/m/Y H:i') : '-' }}</td>
