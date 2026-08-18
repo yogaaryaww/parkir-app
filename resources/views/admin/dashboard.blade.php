@@ -70,7 +70,7 @@
     <div class="col-lg-6">
         <div class="card h-100">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span class="fw-bold"><i class="fa-solid fa-square-parking text-primary me-2"></i> Kapasitas Area Parkir Real-time</span>
+                <span class="fw-bold"><i class="fa-solid fa-square-parking text-primary me-2"></i> Kapasitas Area Parkir</span>
                 <a href="{{ route('admin.area.index') }}" class="btn btn-sm btn-outline-primary">Kelola Area</a>
             </div>
             <div class="card-body">
